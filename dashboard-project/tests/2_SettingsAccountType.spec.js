@@ -1,5 +1,5 @@
 import { assert } from "console";
-import {Login, tillSettings} from "./utils/helpers.js"
+import {Login, tillSettings, dropdownSelect} from "./utils/helpers.js"
 import {test, expect} from '@playwright/test'
 
 async function companyType(page){
@@ -28,17 +28,18 @@ async function companyType(page){
     await industryType.click();
     //await page.getByTestId('company_industry').getByRole('button', { name: 'Open' }).click();
     
-    await industryType.fill("Test Industry 8880");
-    await page.keyboard.press('ArrowDown');
-    await industryType.press('Enter');
+    await industryType.fill("Test Industry 9098");
+    await dropdownSelect(page, industryType);
 
     const typeName = page.getByRole('textbox', { name: 'Enter Type Name', exact: true })
-      const typeNameValue = "Test Company Type 8880";
+      const typeNameValue = "Test Company Type 9098";
    await typeName.fill(typeNameValue);
+   await page.waitForTimeout(1500);
     await submitButton.click();
+       await page.waitForTimeout(1500);
+
 
 } 
-
 test('Testing the Company Type', async({page})=> {
    await companyType(page);
 

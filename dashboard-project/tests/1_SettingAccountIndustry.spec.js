@@ -25,7 +25,7 @@ async function createIndustry(page){
 
     // Create a new industry
     const industryName = page.getByRole('textbox', { name: 'Enter industry Name', exact: true })
-    const industryNameValue = "Test Industry 8880";
+    const industryNameValue = "Test Industry 9098";
     await industryName.fill(industryNameValue);
     const submitIndustry = page.getByRole('button', { name: 'submit' });
     await submitIndustry.click();

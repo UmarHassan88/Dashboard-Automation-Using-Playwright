@@ -48,7 +48,11 @@ export async function tillSettings(page) {
 
   await settingsOption.click();
 }
+export async function dropdownSelect(page, constant){
+   await page.keyboard.press('ArrowDown');
+   await constant.press('Enter');
 
+ }
  test('Input Fields Validation', async({page}) => {
    await Login(page);
 })
