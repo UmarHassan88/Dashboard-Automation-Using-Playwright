@@ -17,13 +17,25 @@ async function companyType(page){
     //await assert(createTypeButton).isVisible();
     await createTypeButton.click();
 
+
+    //CHecking the Assertions
+    const submitButton = page.getByRole('button', { name: 'submit' });
+    const typeNameAssert = page.getByText('Type Name is required')
+    await submitButton.click();
+    await expect(typeNameAssert).toBeVisible();
     //Filling the Company Type Form
     const industryType = page.getByRole('combobox', { name: 'Please Select Select industry' })
     await industryType.click();
     //await page.getByTestId('company_industry').getByRole('button', { name: 'Open' }).click();
-    await page.waitForSelector('value=Test Industry 8864', { timeout: 5000 });
+    
+    await industryType.fill("Test Industry 8880");
+    await page.keyboard.press('ArrowDown');
+    await industryType.press('Enter');
 
-    await page.click('text=Test Industry 8864');
+    const typeName = page.getByRole('textbox', { name: 'Enter Type Name', exact: true })
+      const typeNameValue = "Test Company Type 8880";
+   await typeName.fill(typeNameValue);
+    await submitButton.click();
 
 } 
 
