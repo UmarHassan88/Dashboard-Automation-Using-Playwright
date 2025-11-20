@@ -5,6 +5,11 @@ import {
   tillGeneralSettings,
   countryGenerator,
   dropdownSelect,
+  randomStringGenerator,
+  randomIntGenerator,
+  submitButton,
+  selectCountry,
+  selectlatlang,
 } from "../../utils/helpers";
 
 async function createState(page) {
@@ -22,12 +27,16 @@ async function createState(page) {
   console.log("Asserting the Add State pop up");
   const addStatePopUp = page.getByRole("heading", { name: "Add State" });
   await expect(addStatePopUp).toBeVisible();
-  const selectCountry = page.getByRole("combobox", { name: "Select Country" });
-  await selectCountry.click();
-  await countryGenerator(page, selectCountry);
-  await dropdownSelect(page, selectCountry, 1);
+  await selectCountry(page);
+  const stateName = page.locator('input[name="state_name"]');
+  await randomStringGenerator(page, stateName);
+  const stateNameAR = page.locator('input[name="state_name_arabic"]');
+  await randomStringGenerator(page, stateNameAR);
+  //Generating Random Lat and long Values
+  await selectlatlang(page);
+  await submitButton(page);
 }
 
-test("This test craetes a new State", async ({ page }) => {
+test("This test creates a new State", async ({ page }) => {
   await createState(page);
 });

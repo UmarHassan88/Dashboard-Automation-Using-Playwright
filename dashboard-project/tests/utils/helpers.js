@@ -66,11 +66,11 @@ export async function dropdownSelect(page, constant, j) {
   await constant.press("Enter");
 }
 
-export async function dropdownSelectOnly(page, constant, j) {
+export async function dropdownSelectOnly(page, locator) {
   await page.waitForTimeout(1000);
   await page.keyboard.press("ArrowDown");
 
-  await constant.press("Enter");
+  await locator.press("Enter");
 }
 
 export async function fillLocationDetails(page) {
@@ -167,18 +167,67 @@ export async function tillAddCountry(page) {
 
 export async function countryGenerator(page, locator) {
   let array = [
-    "UAE",
+    "United Arab Emirates",
     "Pakistan",
     "Egypt",
-    "Lebanon",
-    "SA",
-    "Brazil",
-    "USA",
-    "UK",
+    // "Lebanon",
+    // "SA",
+    // "Brazil",
+    // "United Kingdom",
+    // "Sudan",
+    // "Algeria",
   ];
-  const ran = Math.floor(Math.random() * 8);
+  const ran = Math.floor(Math.random() * 3);
   let rand = array[ran];
   console.log("The country " + rand + " is selected indexed at " + ran);
 
   await locator.fill(rand);
+}
+
+export async function randomIntGenerator(page, locator) {
+  const randomInt = Math.floor(Math.random() * 10).toString();
+
+  await locator.fill(randomInt);
+}
+
+export async function submitButton(page) {
+  const submitButton = page.getByRole("button", { name: "submit" });
+  await expect(submitButton).toBeVisible();
+  await submitButton.click();
+}
+
+export async function selectCountry(page) {
+  const select = page.getByRole("combobox", { name: "Select Country" });
+  await select.click();
+  await countryGenerator(page, select);
+  await dropdownSelectOnly(page, select);
+}
+
+export async function selectState(page) {
+  const state = page.getByRole("combobox", { name: "Select State" });
+  await state.click();
+  await dropdownSelectOnly(page, state);
+}
+
+export async function selectCity(page) {
+  const city = page.getByRole("combobox", { name: "Select City" });
+  await city.click();
+  await dropdownSelectOnly(page, city);
+}
+
+export async function selectCommunity(page) {
+  const community = page.getByRole("combobox", { name: "Select Community" });
+  await community.click();
+  await dropdownSelectOnly(page, community);
+}
+
+export async function uploadFile(page, locator) {
+  await locator.setInputFiles("C:\\Users\\umar\\Downloads\\scannerr.png");
+}
+
+export async function selectlatlang(page) {
+  const lat = page.getByPlaceholder("Enter latitude");
+  await randomIntGenerator(page, lat);
+  const long = page.getByPlaceholder("Enter longitude");
+  await randomIntGenerator(page, long);
 }
