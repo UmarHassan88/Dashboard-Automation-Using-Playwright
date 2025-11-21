@@ -5,6 +5,8 @@ import {
   dropdownSelectOnly,
   tillAddCountry,
   countryGenerator,
+  randomIntGenerator,
+  randomStringGenerator,
 } from "../../utils/helpers.js";
 import { type } from "os";
 
@@ -14,6 +16,18 @@ async function addCountry(page) {
   const countryName = page.getByRole("textbox", { name: "Enter Country name" });
   await expect(countryName).toBeVisible();
   await countryGenerator(page, countryName);
+  const countryNameAR = page.getByRole("textbox", { name: "Insert Country" });
+  await randomStringGenerator(page, countryNameAR);
+  const countryCode = page.getByPlaceholder("Enter Country Code");
+  await randomIntGenerator(page, countryCode);
+  const alphaCode = page.getByRole("textbox", { name: "Enter Alpha Code 2" });
+  await randomIntGenerator(page, alphaCode);
+  const isoCode = page.getByRole("textbox", { name: "Enter ISO Code" });
+  await randomIntGenerator(page, isoCode);
+  const currency = page.getByRole("combobox", { name: "Select a currency" });
+  await currency.click();
+  await dropdownSelectOnly(page, currency);
+
   //Scroll to the Bottom of the Page
   await page.evaluate(() => {
     window.scrollTo({

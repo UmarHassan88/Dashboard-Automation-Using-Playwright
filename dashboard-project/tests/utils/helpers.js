@@ -143,9 +143,9 @@ export async function tillAccounts(page) {
   await accountTypeSelect.click();
 }
 
-export async function randomStringGenerator(page, con) {
+export async function randomStringGenerator(page, locator) {
   const randomValues = Math.random().toString(36).substring(2, 5);
-  await con.fill(`TestCompany${randomValues}`);
+  await locator.fill(`TestCompany${randomValues}`);
 }
 
 export async function tillGeneralSettings(page) {
