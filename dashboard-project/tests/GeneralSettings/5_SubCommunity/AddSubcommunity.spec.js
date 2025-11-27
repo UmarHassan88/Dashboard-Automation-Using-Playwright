@@ -15,6 +15,7 @@ import {
   selectCity,
   selectCommunity,
   selectlatlang,
+  mandatoryfieldValidation,
 } from "../../utils/helpers";
 
 async function addSubcommunity(page) {
@@ -33,7 +34,11 @@ async function addSubcommunity(page) {
     name: "Add Sub Community",
   });
   await addSubcommunity.click();
-  await selectCountry(page);
+  await mandatoryfieldValidation(page); //Validating Mandatory Fields
+  const countrySelect = page.getByRole("combobox", { name: "Select Country" });
+  await countrySelect.click();
+  await countryGenerator(page, countrySelect, 1);
+  await dropdownSelectOnly(page, countrySelect);
   await selectState(page);
   await selectCity(page);
   await selectCommunity(page);
@@ -48,6 +53,7 @@ async function addSubcommunity(page) {
   await randomStringGenerator(page, subCommunityfieldAR);
   await selectlatlang(page);
   await submitButton(page);
+  console.log("Sub community is Added Successfully!");
 }
 
 test("This test adds a subcommunity", async ({ page }) => {

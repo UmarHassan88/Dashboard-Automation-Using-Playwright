@@ -165,19 +165,19 @@ export async function tillAddCountry(page) {
   await addCountry.click();
 }
 
-export async function countryGenerator(page, locator) {
+export async function countryGenerator(page, locator, number) {
   let array = [
     "United Arab Emirates",
     "Pakistan",
     "Egypt",
-    // "Lebanon",
-    // "SA",
-    // "Brazil",
-    // "United Kingdom",
-    // "Sudan",
-    // "Algeria",
+    "Lebanon",
+    "SA",
+    "Brazil",
+    "United Kingdom",
+    "Sudan",
+    "Algeria",
   ];
-  const ran = Math.floor(Math.random() * 3);
+  const ran = Math.floor(Math.random() * number);
   let rand = array[ran];
   console.log("The country " + rand + " is selected indexed at " + ran);
 
@@ -199,7 +199,7 @@ export async function submitButton(page) {
 export async function selectCountry(page) {
   const select = page.getByRole("combobox", { name: "Select Country" });
   await select.click();
-  await countryGenerator(page, select);
+  await countryGenerator(page, select, 3);
   await dropdownSelectOnly(page, select);
 }
 
@@ -221,6 +221,14 @@ export async function selectCommunity(page) {
   await dropdownSelectOnly(page, community);
 }
 
+export async function selectSubCommunity(page) {
+  const subCommunity = page.getByRole("combobox", {
+    name: "Select Sub Community",
+  });
+  await subCommunity.click();
+  await dropdownSelectOnly(page, subCommunity);
+}
+
 export async function uploadFile(page, locator) {
   await locator.setInputFiles("C:\\Users\\umar\\Downloads\\scannerr.png");
 }
@@ -230,4 +238,22 @@ export async function selectlatlang(page) {
   await randomIntGenerator(page, lat);
   const long = page.getByPlaceholder("Enter longitude");
   await randomIntGenerator(page, long);
+}
+
+export async function fetchElementValue(page, locator) {
+  const elementValue = await locator.inputValue();
+  console.log("Input Value: ", elementValue);
+}
+
+export async function mandatoryfieldValidation(page) {
+  await submitButton(page); //Submitting Empty Form to check Validations
+  const country = page.getByText("Select Country *");
+  //Validating the Required Fields b
+  await expect(country).toHaveClass(/Mui error Mui-required/);
+}
+
+export async function mandatoryfieldsValidationCustom(page, locator) {
+  await submitButton(page); //Submitting Empty Form to check Validations
+  //Validating the Required Fields by classes
+  await expect(locator).toHaveClass(/Mui-error Mui-required/);
 }

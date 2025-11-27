@@ -14,6 +14,7 @@ import {
   selectState,
   selectCity,
   selectlatlang,
+  mandatoryfieldValidation,
 } from "../../utils/helpers";
 
 async function addCommunity(page) {
@@ -35,6 +36,7 @@ async function addCommunity(page) {
   });
   await expect(addCommunityHeadAssert).toBeVisible();
   console.log("Invoking the Methods to Add Country, State and City ...");
+  await mandatoryfieldValidation(page); //Validating Mandatory Fields
   await selectCountry(page);
   await selectState(page);
   await selectCity(page);

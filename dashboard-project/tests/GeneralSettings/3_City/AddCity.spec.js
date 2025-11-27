@@ -13,6 +13,7 @@ import {
   uploadFile,
   selectState,
   selectlatlang,
+  mandatoryfieldValidation,
 } from "../../utils/helpers";
 
 async function addCity(page) {
@@ -27,6 +28,7 @@ async function addCity(page) {
   await expect(addCity).toBeVisible();
   await addCity.click();
   console.log("Selecting the Country via Invoked Method");
+  await mandatoryfieldValidation(page); //Validating Mandatory Fields
   await selectCountry(page);
   await selectState(page);
   const createCity = page.getByRole("textbox", {

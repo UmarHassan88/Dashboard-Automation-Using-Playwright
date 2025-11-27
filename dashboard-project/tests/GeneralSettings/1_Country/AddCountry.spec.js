@@ -7,6 +7,7 @@ import {
   countryGenerator,
   randomIntGenerator,
   randomStringGenerator,
+  fetchElementValue,
 } from "../../utils/helpers.js";
 import { type } from "os";
 
@@ -15,11 +16,16 @@ async function addCountry(page) {
   await tillAddCountry(page);
   const countryName = page.getByRole("textbox", { name: "Enter Country name" });
   await expect(countryName).toBeVisible();
-  await countryGenerator(page, countryName);
+  await countryGenerator(page, countryName, 3);
+
+  const elementValue = await countryName.inputValue();
+  console.log("Input Value: ", elementValue);
+
   const countryNameAR = page.getByRole("textbox", { name: "Insert Country" });
   await randomStringGenerator(page, countryNameAR);
   const countryCode = page.getByPlaceholder("Enter Country Code");
   await randomIntGenerator(page, countryCode);
+  await fetchElementValue(page, countryCode);
   const alphaCode = page.getByRole("textbox", { name: "Enter Alpha Code 2" });
   await randomIntGenerator(page, alphaCode);
   const isoCode = page.getByRole("textbox", { name: "Enter ISO Code" });
@@ -37,10 +43,24 @@ async function addCountry(page) {
   });
   const countryFlag = page.getByRole("button", { name: "Choose File" });
   await countryFlag.setInputFiles("C:\\Users\\umar\\Downloads\\scannerr.png");
+  await fetchElementValue(page, countryFlag);
   const submitButton = page.getByRole("button", { name: "submit" });
   await submitButton.click();
-
   console.log("Country is Added!");
+
+  const verifyCountry = page
+    .getByRole("cell", { name: "United Arab Emirates" })
+    .first();
+  await expect(await fetchElementValue(page, verifyCountry)).toEqual(
+    await fetchElementValue(page, countryName)
+  );
+}
+
+async function verifyAddedCountry(page) {
+  // const verifyCountry = page
+  //   .getByRole("cell", { name: "United Arab Emirates" })
+  //   .first();
+  // await expect(verifyCountry).toEqual(fetchElementValue(page, verifyCountry));
 }
 
 test("Adding a Country", async ({ page }) => {

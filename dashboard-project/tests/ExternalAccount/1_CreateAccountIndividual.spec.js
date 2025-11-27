@@ -122,7 +122,7 @@ async function fillBankDetails(page) {
   const currencies = page.getByRole("combobox", { name: "Please a Currency" });
   await currencies.click();
   const currencyDirham = page.getByRole("option", {
-    name: "UAE DirhamUAE Dirham",
+    name: "UAE Dirham",
   });
   await expect(currencyDirham).toBeVisible();
   await currencyDirham.click();

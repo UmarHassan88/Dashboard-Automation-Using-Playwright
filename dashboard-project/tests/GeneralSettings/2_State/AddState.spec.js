@@ -10,6 +10,7 @@ import {
   submitButton,
   selectCountry,
   selectlatlang,
+  mandatoryfieldValidation,
 } from "../../utils/helpers";
 
 async function createState(page) {
@@ -27,6 +28,7 @@ async function createState(page) {
   console.log("Asserting the Add State pop up");
   const addStatePopUp = page.getByRole("heading", { name: "Add State" });
   await expect(addStatePopUp).toBeVisible();
+  await mandatoryfieldValidation(page); //Validating Mandatory Fields
   await selectCountry(page);
   const stateName = page.locator('input[name="state_name"]');
   await randomStringGenerator(page, stateName);
